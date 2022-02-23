@@ -1,0 +1,58 @@
+*
+{
+   margin:0;
+   padding: 0;
+}
+
+header{
+   background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('Image.jpg');
+   height:100vh;
+   background-size: cover;
+   background-position: center;
+}
+
+.nav-menue {
+
+   float: right;
+   list-style:none;
+   margin-top: 30px;
+
+}
+
+.nav-menue li {
+   display: inline-block;
+}
+
+.nav-menue li a {
+   color: blue;
+   text-decoration: none;
+   padding: 5px 20px;
+   font-family: "Group", "Project";
+   font-size: 20px;
+
+}
+
+.homebtn a {
+    border: 1px solid grey;
+    background-color: white;
+
+}
+
+.nav-menue li a:hover {
+     border: 1px solid grey;
+     background-color: white;
+
+
+}
+
+.tagline{
+     position: absolute;
+     width:1200px;
+     margin-left: 0;
+     margin-top: 0;
+}
+
+h1 {
+     color: greenyellow;
+
+}
