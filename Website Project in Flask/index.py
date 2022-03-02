@@ -19,7 +19,7 @@ def computers_page():
 def phones_page():
     return render_template('phones.html')
     #return "<h1>phones  adress</h1>"
-
+        
 #ipad & tablets me page
 @app.route("/ipads")
 def Ipads_page():
