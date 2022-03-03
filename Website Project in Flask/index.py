@@ -8,6 +8,7 @@ def index():
     # call html pages r
     return render_template('index.html')
 
+
 # computers page
 @app.route("/computers")
 def computers_page():
@@ -31,9 +32,9 @@ def accessories_page():
     return render_template('accessories.html')
 
 # contact me page
-#@app.route("/contact")
-#def contact_page():
-   # return render_template('contact.html')
+@app.route("/contact")
+def contact_page():
+    return render_template('contact.html')
 
 
 
