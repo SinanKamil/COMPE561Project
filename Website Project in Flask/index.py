@@ -37,4 +37,31 @@ def contact_page():
     return render_template('contact.html')
 
 
+# accessories elements
+
+
+# charger page in accessorires-page
+@app.route("/accessories/chargers")
+def charger():
+    return render_template('/accessories-pages/charger.html')
+
+# gaming page in accessories-page
+@app.route("/accessories/gaming")
+def gaming():
+    return render_template('/accessories-pages/gaming.html')
+
+# headsets page in accessories-page
+@app.route("/accessories/headsets")
+def headsets():
+    return render_template('/accessories-pages/headsets.html')
+
+# mics/speakers page in accessories-page
+@app.route("/accessories/mics/speakers")
+def speakers():
+    return render_template('/accessories-pages/speakers.html')
+
+# phone/ipads cases page in accessories-page
+@app.route("/accessories/phone/ipads cases")
+def cases():
+    return render_template('/accessories-pages/cases.html')
 
