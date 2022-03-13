@@ -65,3 +65,8 @@ def speakers():
 def cases():
     return render_template('/accessories-pages/cases.html')
 
+# keyboard/mouse page in accessories-page
+@app.route("/accessories/keyboard/mouse")
+def keyboard():
+    return render_template('/accessories-pages/keyboard.html')
+
