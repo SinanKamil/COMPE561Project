@@ -17,14 +17,19 @@ header {
 }
 
 nav{
-    background-color: rgb(179, 196, 179);
+    background-color: black;
    height:80PX;
    background-size: cover;
    background-position: center;
    width: 100%;
    box-shadow: 2px 2px 30px rgba(0,0,0,0.05);
    z-index: 100;
+   text-decoration: none;
 
+  
+}
+
+.nav-element {
   
 }
 
@@ -136,3 +141,14 @@ form.example input[type=text] {
 
 
 
+.searchbox{
+  position: absolute !important;
+  width: 20% !important;
+  right: 30px !important;
+  top: 20px !important;
+  display: flex;
+}
+
+.icons-page {
+  margin-top: 5%;
+}
