@@ -8,7 +8,7 @@ body {
 }
 
 /* Style the header */
-header {
+/* header {
   background-color: #666;
   padding: 30px;
   text-align: center;
@@ -38,7 +38,7 @@ nav{
 
 
 /* Style the list inside the menu */
-.navigation{
+/* .navigation{
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -69,7 +69,7 @@ nav{
        margin: 0px 10px;
        font-size: 1.2rem ;
        color: rgba(0,0,0,0.7);
-}
+} */ */
 
 
 
