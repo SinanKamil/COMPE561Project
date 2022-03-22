@@ -8,7 +8,7 @@ body {
 }
 
 /* Style the header */
-header {
+/* header {
   background-color: #666;
   padding: 30px;
   text-align: center;
@@ -17,14 +17,23 @@ header {
 }
 
 nav{
+<<<<<<< HEAD
     background-color:black;
+=======
+    background-color: black;
+>>>>>>> e73e82e7a79b732a16f7d1d4e4ba3bcf557fb900
    height:80PX;
    background-size: cover;
    background-position: center;
    width: 100%;
    box-shadow: 2px 2px 30px rgba(0,0,0,0.05);
    z-index: 100;
+   text-decoration: none;
 
+  
+}
+
+.nav-element {
   
 }
 
@@ -33,7 +42,7 @@ nav{
 
 
 /* Style the list inside the menu */
-.navigation{
+/* .navigation{
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -64,7 +73,7 @@ nav{
        margin: 0px 10px;
        font-size: 1.2rem ;
        color: rgba(0,0,0,0.7);
-}
+} */ */
 
 
 
@@ -128,11 +137,21 @@ form.example input[type=text] {
   }
 }
 
+.icons-page {
+  color: white !important;
+  margin-right: 2% !important;
+  margin-top: 2% !important;
+}
 
+.search-box {
+  display: flex !important;
+  width: 45%;
+  justify-content: flex-end;
+}
 
-
-
-
-
-
-
+.search-input {
+  width: 60% !important;
+  margin-right: 4%;
+  height: 60%;
+  margin-top: 1.5%;
+}
