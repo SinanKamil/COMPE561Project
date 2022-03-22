@@ -16,23 +16,23 @@
   color: white;
 } */
 
-nav {
+/* nav {
   background-color:black;
   height:80PX;
   background-position: center;
   width: 100%;
   box-shadow: 2px 2px 30px rgba(0,0,0,0.05);
   z-index: 1000;  
-}
+} */
 
 /* Style the list inside the menu */
- .navigation {
+ /* .navigation {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0px 45px;
   width: 100%;
-}
+} */
 
 /* .nav-menue{
   display: flex;
@@ -69,7 +69,7 @@ nav {
 .fa-shopping-cart{
   position: relative;
   margin-right: 1%;
-}
+}ç
 
 .num-cart-product{
   position: absolute;
@@ -136,4 +136,8 @@ footer {
   margin-right: 4%;
   height: 60%;
   margin-top: 1.5%;
+}
+
+.navbar-nav {
+  margin-left: 20px !important;
 }
