@@ -7,8 +7,8 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Style the header */
-/* header {
+ Style the header */
+ header {
   background-color: #666;
   padding: 30px;
   text-align: center;
@@ -17,20 +17,13 @@ body {
 }
 
 nav{
-<<<<<<< HEAD
-    background-color:black;
-=======
-    background-color: black;
->>>>>>> e73e82e7a79b732a16f7d1d4e4ba3bcf557fb900
+
+   background-color:black;
    height:80PX;
-   background-size: cover;
    background-position: center;
    width: 100%;
    box-shadow: 2px 2px 30px rgba(0,0,0,0.05);
-   z-index: 100;
-   text-decoration: none;
-
-  
+   z-index: 1000;  
 }
 
 .nav-element {
@@ -42,11 +35,12 @@ nav{
 
 
 /* Style the list inside the menu */
-/* .navigation{
+ .navigation{
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 0px 45px;
+      width: 100%;
 }
 
 .nav-menue{
@@ -85,6 +79,7 @@ nav{
 }
 .fa-shopping-cart{
         position: relative;
+        margin-right: 1%;
 }
 
 .num-cart-product{
@@ -145,8 +140,9 @@ form.example input[type=text] {
 
 .search-box {
   display: flex !important;
-  width: 45%;
+  width: 25%;
   justify-content: flex-end;
+  margin-right: 1%;
 }
 
 .search-input {
@@ -154,4 +150,5 @@ form.example input[type=text] {
   margin-right: 4%;
   height: 60%;
   margin-top: 1.5%;
+
 }
