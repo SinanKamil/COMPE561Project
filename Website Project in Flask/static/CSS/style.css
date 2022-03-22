@@ -3,49 +3,39 @@
   box-sizing: border-box;
 }
 
-body {
+/* body {
   font-family: Arial, Helvetica, sans-serif;
-}
+} */
 
- Style the header */
+ /*
  header {
   background-color: #666;
   padding: 30px;
   text-align: center;
   font-size: 35px;
   color: white;
+} */
+
+nav {
+  background-color:black;
+  height:80PX;
+  background-position: center;
+  width: 100%;
+  box-shadow: 2px 2px 30px rgba(0,0,0,0.05);
+  z-index: 1000;  
 }
-
-nav{
-
-   background-color:black;
-   height:80PX;
-   background-position: center;
-   width: 100%;
-   box-shadow: 2px 2px 30px rgba(0,0,0,0.05);
-   z-index: 1000;  
-}
-
-.nav-element {
-  
-}
-
-
-
-
 
 /* Style the list inside the menu */
- .navigation{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0px 45px;
-      width: 100%;
+ .navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 45px;
+  width: 100%;
 }
 
-.nav-menue{
-      display: flex;
-
+/* .nav-menue{
+  display: flex;
 }
 
 .nav-menue li{
@@ -60,15 +50,14 @@ nav{
 .nav-menue li a{
 
        color: #555555;
-}
+} */
 
-.right-menue a{
+/* .right-menue a{
 
        margin: 0px 10px;
        font-size: 1.2rem ;
        color: rgba(0,0,0,0.7);
-} */ */
-
+} 
 
 
 .nav-menue a:hover,
@@ -76,28 +65,27 @@ nav{
         color: blue;
         transition: all ease 0.3s;
 
-}
+} */
 .fa-shopping-cart{
-        position: relative;
-        margin-right: 1%;
+  position: relative;
+  margin-right: 1%;
 }
 
 .num-cart-product{
-        position: absolute;
-        top: -17px;
-        right: -17px;
-        width: 25px;
-        height: 25px;
-        font-size: 0.8rem;
-        border-radius: 50%;
-        background-color: blue;
-        color: #ffffff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-weight: 400;
+  position: absolute;
+  top: -17px;
+  right: -17px;
+  width: 25px;
+  height: 25px;
+  font-size: 0.8rem;
+  border-radius: 50%;
+  background-color: blue;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 400;
 }
-
 
 article {
   float: left;
@@ -121,16 +109,14 @@ footer {
   text-align: center;
   color: white;
 }
-form.example input[type=text] {
-  width: 50%;
-}
+
 /* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
-@media (max-width: 600px) {
+/* @media (max-width: 600px) {
   nav, article  {
     width: 100%;
     height: auto;
   }
-}
+} */
 
 .icons-page {
   color: white !important;
@@ -140,7 +126,7 @@ form.example input[type=text] {
 
 .search-box {
   display: flex !important;
-  width: 25%;
+  width: 45%;
   justify-content: flex-end;
   margin-right: 1%;
 }
@@ -150,5 +136,4 @@ form.example input[type=text] {
   margin-right: 4%;
   height: 60%;
   margin-top: 1.5%;
-
 }
