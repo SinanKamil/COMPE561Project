@@ -35,11 +35,19 @@ CREATE TABLE  product  (
   PRIMARY KEY (id),
   FOREIGN KEY (category_id) REFERENCES category(id)
 );
-INSERT into product  (name, price, description,image, stock, created_at) values ('MacBook Pro', 1499.99, 'Apple 13.3 MacBook Pro with Retina Display,Silver 2020',LOAD_FILE('d:\\flower.gif'), 8, NOW() )
+ALTER TABLE product 
+ADD COLUMN image_location varchar(200) AFTER image;
+INSERT into product  (name, price, description,image, image_location  ,stock, created_at) values ('MacBook Pro', 1499.99, 'Apple 13.3 MacBook Pro with Retina Display,Silver 2020',LOAD_FILE('/static/images/cases.jpg'), '/static/images/cases.jpg',8, NOW() )
 
 INSERT INTO pictures VALUES(1, LOAD_FILE('d:\\flower.gif'));
-select * FROM product  
+SELECT * FROM  product p 
+DELETE FROM product WHERE id != 5
+ALTER TABLE product  AUTO_INCREMENT = 1;
+Update product 
+	SET id = 1
+	where id = 5
 
+ 
 
 CREATE TABLE  user_role  (
    id  int  NOT NULL AUTO_INCREMENT,
@@ -67,7 +75,8 @@ CREATE TABLE  users  (
   user_role_id  int,
   PRIMARY KEY (id),
   FOREIGN KEY (user_role_id) REFERENCES user_role(id)
-);	
+);
+
 INSERT into users (firstname,lastname,email,password,address,city,State,zipcode,country,phone,created_at,user_role_id)
 values ('Shakiba','Abdul Sattar','sabdulsattar9429@sdsu.edu','123453','4321 adams Ave', 'San Diego','california','92125','USA','619-2345467',NOW(), 1)
 INSERT into users (firstname,lastname,email,password,address,city,State,zipcode,country,phone,created_at,user_role_id)values ('Muntaha','Abdul Sattar','muntahasattar@gmail.com','124453','4521 adams Ave', 'San Diego','california','92125','USA','619-7315467',NOW(), 2)
@@ -90,6 +99,7 @@ CREATE TABLE  orders  (
   FOREIGN KEY (users_id) REFERENCES users(id)
   
 );
+
 
 CREATE TABLE  order_details  (
   id int NOT NULL AUTO_INCREMENT,
