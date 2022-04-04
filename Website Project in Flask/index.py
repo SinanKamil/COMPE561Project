@@ -1,12 +1,27 @@
 from flask import render_template
 from flask import Flask
+from flask_mysqldb import MySQL
+
 app = Flask(__name__)
 
+# Required
+
+app.config['MYSQL_HOST'] = 'localhost'
+app.config["MYSQL_USER"] = "root"
+app.config["MYSQL_PASSWORD"] = "Hidayat1234"
+app.config["MYSQL_DB"] = "e-Shop"
+
+mysql = MySQL(app)
 
 @app.route('/')
 def index():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM product")
+    rv = cur.fetchall()
+    result = str(rv)
     # call html pages r
-    return render_template('index.html')
+    return result
+    #return render_template('index.html')
 
 
 # computers page
