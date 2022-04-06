@@ -1,5 +1,5 @@
 from flask import render_template
-from flask import Flask
+from flask import Flask, jsonify
 from flask_mysqldb import MySQL
 
 app = Flask(__name__)
@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config["MYSQL_USER"] = "root"
-app.config["MYSQL_PASSWORD"] = "Hidayat1234"
+app.config["MYSQL_PASSWORD"] = ""
 app.config["MYSQL_DB"] = "e-Shop"
 
 mysql = MySQL(app)
@@ -18,9 +18,17 @@ def index():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM product")
     rv = cur.fetchall()
-    result = str(rv)
+   # return str(rv);
+    category = []
+    content = {}
+    
+    for result in rv:
+        print(result)
+        content = {'name': result['name']}
+        category.append(content)
+        content = {}
     # call html pages r
-    return result
+    return jsonify(category)
     #return render_template('index.html')
 
 
