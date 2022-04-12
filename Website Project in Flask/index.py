@@ -1,34 +1,36 @@
-from flask import render_template
-from flask import Flask, jsonify
-from flask_mysqldb import MySQL
-
+import flask
+from flask import request, jsonify, make_response, render_template
+from flask import Flask
+from flask_mysqldb import MySQL, MySQLdb
 app = Flask(__name__)
+
+
+
 
 # Required
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config["MYSQL_USER"] = "root"
-app.config["MYSQL_PASSWORD"] = ""
+app.config["MYSQL_PASSWORD"] = "Hidayat1234"
 app.config["MYSQL_DB"] = "e-Shop"
 
 mysql = MySQL(app)
 
-@app.route('/')
+@app.route('/' , methods=['GET', 'POST'])
 def index():
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM product")
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("SELECT * from product")
     rv = cur.fetchall()
-   # return str(rv);
-    category = []
+    # return str(rv);
+    products = []
     content = {}
     
     for result in rv:
-        print(result)
-        content = {'name': result['name']}
-        category.append(content)
-        content = {}
-    # call html pages r
-    return jsonify(category)
+    #    return str(result)
+       content = {'id': result['id'], 'name': result['name'], 'description': result['description'], 'image_location': result['image_location'], 'price': float(result['price']) }
+       products.append(content)
+       content = {}
+    return jsonify(products)
     #return render_template('index.html')
 
 
