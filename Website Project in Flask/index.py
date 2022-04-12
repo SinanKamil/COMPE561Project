@@ -56,6 +56,17 @@ def Ipads_page():
 def accessories_page():
     return render_template('accessories.html')
 
+# userlogin page
+@app.route("/userlogin")
+def userlogin_page():
+    return render_template('userlogin.html')
+
+# user sign up page
+@app.route("/usersignup")
+def usersignup_page():
+    return render_template('usersignup.html')
+
+
 # contact me page
 @app.route("/contact")
 def contact_page():
