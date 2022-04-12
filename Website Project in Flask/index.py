@@ -18,20 +18,60 @@ mysql = MySQL(app)
 
 @app.route('/' , methods=['GET', 'POST'])
 def index():
+    # crate cursor and connection to database
     cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    # call this query when called
     cur.execute("SELECT * from product")
+    # give the data by calling it
+    rv = cur.fetchall()
+    #return str(rv);
+    
+    # store all the data in this array
+    products = []
+    # every single element comes from the database
+    content = {}
+    
+    for result in rv:
+       content = {'id': result['id'], 'name': result['name'], 'description': result['description'], 'image_location': result['image_location'], 'price': float(result['price']) }
+       products.append(content)
+       content = {}
+       #return jsonify(products)
+    return render_template('index.html', products = products)
+
+
+@app.route('/sample' , methods=['GET', 'POST'])
+def index1():
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("SELECT * from user_role")
     rv = cur.fetchall()
     # return str(rv);
-    products = []
+    user_role = []
     content = {}
     
     for result in rv:
     #    return str(result)
-       content = {'id': result['id'], 'name': result['name'], 'description': result['description'], 'image_location': result['image_location'], 'price': float(result['price']) }
-       products.append(content)
+       content = {'id': result['id'], 'name': result['name'] }
+       user_role.append(content)
        content = {}
-    return jsonify(products)
-    #return render_template('index.html')
+    return jsonify(user_role)
+    # return render_template('index1.html')
+
+@app.route('/sample1' , methods=['GET', 'POST'])
+def index2():
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("SELECT * from users")
+    rv = cur.fetchall()
+    # return str(rv);
+    users = []
+    content = {}
+    
+    for result in rv:
+    #    return str(result)
+       content = {'id': result['id'], 'name': result['name'] }
+       users.append(content)
+       content = {}
+    return jsonify(users)
+    return render_template('index1.html')
 
 
 # computers page
@@ -46,10 +86,23 @@ def phones_page():
     return render_template('phones.html')
     #return "<h1>phones  adress</h1>"
         
+
 #ipad & tablets me page
 @app.route("/ipads")
 def Ipads_page():
-    return render_template('ipads.html')
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("SELECT * from product where category_id = 2 OR category_id = 4 order by id desc")
+    rv = cur.fetchall()
+    # return str(rv)
+    products = []
+    content = {}
+    
+    for result in rv:
+       content = {'id': result['id'], 'name': result['name'], 'description': result['description'], 'image_location': result['image_location'], 'price': float(result['price']), 'stock': result['stock'] }
+       products.append(content)
+       content = {}
+    # return jsonify(products)
+    return render_template('ipads.html', products = products )
 
 #Accessories me page
 @app.route("/accessories")
@@ -79,7 +132,20 @@ def contact_page():
 # charger page in accessorires-page
 @app.route("/accessories/chargers")
 def charger():
-    return render_template('/accessories-pages/charger.html')
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("SELECT * from product where category_id = 6 order by id desc")
+    rv = cur.fetchall()
+    # return str(rv)
+    products = []
+    content = {}
+    
+    for result in rv:
+       content = {'id': result['id'], 'name': result['name'], 'description': result['description'], 'image_location': result['image_location'], 'price': float(result['price']), 'stock': result['stock'] }
+       products.append(content)
+       content = {}
+    # return jsonify(products)
+    return render_template('/accessories-pages/charger.html', products = products )
+    
 
 # gaming page in accessories-page
 @app.route("/accessories/gaming")

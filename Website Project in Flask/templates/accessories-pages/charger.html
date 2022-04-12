@@ -1,9 +1,29 @@
 {% extends 'layout.html' %}
 
-{% block title %}Charger{% endblock  %}
+{% block title %}Charger{% endblock %}
 
 {% block body %}
 <h3 class="text-center">Charging Accessories</h3>
+<div class="col-md-11" style="width: 80%; margin: 0 auto;">
+    <div class="row">
+
+        {% for product in products %}
+
+        <div class="card" style="width: 16rem; margin: 3%; height: 560px;">
+            <img src={{product.image_location}} class="card-img-top" width="100" height="330" alt="GTAImage">
+            <div class="card-body">
+                <h4 class="card-title">{{product.name}}</h4>
+                <h6>{{product.price}}$</h6>
+                <p class="card-text">{{product.description}}<br>{{product.stock}} in stock</p>
+                <a href="#" class="btn btn-primary">Add <i class="fas fa-shopping-cart"></i></a>
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+
+        <!-- <h3 class="text-center">Charging Accessories</h3>
 <div class="col-md-11" style="width: 80%; margin: 0 auto;">
     <div class="row">
         <div class="card" style="width: 16rem; margin: 3%; height: 560px;">
@@ -72,5 +92,6 @@
             </div>
         </div>
     </div>
-</div>
-{% endblock  %}
+</div> -->
+
+{% endblock %}
