@@ -8,7 +8,6 @@ app = Flask(__name__)
 
 
 # Required
-
 app.config['MYSQL_HOST'] = 'localhost'
 app.config["MYSQL_USER"] = "root"
 app.config["MYSQL_PASSWORD"] = "Hidayat1234"
@@ -24,7 +23,7 @@ def index():
     cur.execute("SELECT * from product")
     # give the data by calling it
     rv = cur.fetchall()
-    #return str(rv);
+    # return str(rv);
     
     # store all the data in this array
     products = []
@@ -35,43 +34,8 @@ def index():
        content = {'id': result['id'], 'name': result['name'], 'description': result['description'], 'image_location': result['image_location'], 'price': float(result['price']) }
        products.append(content)
        content = {}
-       #return jsonify(products)
-    return render_template('index.html', products = products)
-
-
-@app.route('/sample' , methods=['GET', 'POST'])
-def index1():
-    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cur.execute("SELECT * from user_role")
-    rv = cur.fetchall()
-    # return str(rv);
-    user_role = []
-    content = {}
-    
-    for result in rv:
-    #    return str(result)
-       content = {'id': result['id'], 'name': result['name'] }
-       user_role.append(content)
-       content = {}
-    return jsonify(user_role)
-    # return render_template('index1.html')
-
-@app.route('/sample1' , methods=['GET', 'POST'])
-def index2():
-    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cur.execute("SELECT * from users")
-    rv = cur.fetchall()
-    # return str(rv);
-    users = []
-    content = {}
-    
-    for result in rv:
-    #    return str(result)
-       content = {'id': result['id'], 'name': result['name'] }
-       users.append(content)
-       content = {}
-    return jsonify(users)
-    return render_template('index1.html')
+    #    return jsonify(products)
+    return render_template('index.html')
 
 
 # computers page
@@ -150,25 +114,154 @@ def charger():
 # gaming page in accessories-page
 @app.route("/accessories/gaming")
 def gaming():
-    return render_template('/accessories-pages/gaming.html')
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("SELECT * from product where category_id = 3 order by id desc")
+    rv = cur.fetchall()
+    # return str(rv)
+    products = []
+    content = {}
+    
+    for result in rv:
+       content = {'id': result['id'], 'name': result['name'], 'description': result['description'], 'image_location': result['image_location'], 'price': float(result['price']), 'stock': result['stock'] }
+       products.append(content)
+       content = {}
+    # return jsonify(products)
+    return render_template('/accessories-pages/gaming.html', products = products )
+    
 
 # headsets page in accessories-page
 @app.route("/accessories/headsets")
 def headsets():
-    return render_template('/accessories-pages/headsets.html')
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("SELECT * from product where category_id = 5 order by id desc")
+    rv = cur.fetchall()
+    # return str(rv)
+    products = []
+    content = {}
+    
+    for result in rv:
+       content = {'id': result['id'], 'name': result['name'], 'description': result['description'], 'image_location': result['image_location'], 'price': float(result['price']), 'stock': result['stock'] }
+       products.append(content)
+       content = {}
+    # return jsonify(products)
+    return render_template('/accessories-pages/headsets.html', products = products )
+    
+    
 
 # mics/speakers page in accessories-page
 @app.route("/accessories/mics/speakers")
 def speakers():
-    return render_template('/accessories-pages/speakers.html')
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("SELECT * from product where category_id = 7 order by id desc")
+    rv = cur.fetchall()
+    # return str(rv)
+    products = []
+    content = {}
+    
+    for result in rv:
+       content = {'id': result['id'], 'name': result['name'], 'description': result['description'], 'image_location': result['image_location'], 'price': float(result['price']), 'stock': result['stock'] }
+       products.append(content)
+       content = {}
+    # return jsonify(products)
+    return render_template('/accessories-pages/speakers.html', products = products )
+    
 
 # phone/ipads cases page in accessories-page
 @app.route("/accessories/phone/ipads cases")
 def cases():
-    return render_template('/accessories-pages/cases.html')
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("SELECT * from product where category_id = 10 order by id desc")
+    rv = cur.fetchall()
+    # return str(rv)
+    products = []
+    content = {}
+    
+    for result in rv:
+       content = {'id': result['id'], 'name': result['name'], 'description': result['description'], 'image_location': result['image_location'], 'price': float(result['price']), 'stock': result['stock'] }
+       products.append(content)
+       content = {}
+    # return jsonify(products)
+    return render_template('/accessories-pages/cases.html', products = products )
+    
 
 # keyboard/mouse page in accessories-page
 @app.route("/accessories/keyboard/mouse")
 def keyboard():
-    return render_template('/accessories-pages/keyboard.html')
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("SELECT * from product where category_id = 8 OR category_id = 9 order by id desc")
+    rv = cur.fetchall()
+    # return str(rv)
+    products = []
+    content = {}
+    
+    for result in rv:
+       content = {'id': result['id'], 'name': result['name'], 'description': result['description'], 'image_location': result['image_location'], 'price': float(result['price']), 'stock': result['stock'] }
+       products.append(content)
+       content = {}
+    # return jsonify(products)
+    return render_template('/accessories-pages/keyboard.html', products = products )
+    
+@app.route('/category/<int:cateogry_id>', methods = ['GET'])
+def get_category_by_id(cateogry_id):
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if (cateogry_id == 8 or cateogry_id == 9):
+        cur.execute("SELECT name, description from category where id = 8 or id = 9 order by id desc")
+    elif (cateogry_id == 2 or cateogry_id == 4):
+        cur.execute("SELECT name, description from category where id = 2 or id = 4 order by id desc") 
+    else :
+        cur.execute("SELECT name, description from category where id = '%s' order by id desc" % str(cateogry_id))
+    rv = cur.fetchall()
+    category = []
+    content = {}
+    
+    for result in rv:
+       content = {'name': result['name'], 'description': result['description'] }
+       category.append(content)
+       content = {}
+       
+    if (cateogry_id == 8 or cateogry_id == 9):
+        cur.execute("SELECT * from product where category_id = 8 or category_id = 9 order by id desc")
+    elif (cateogry_id == 2 or cateogry_id == 4):
+        cur.execute("SELECT * from product where category_id = 2 or category_id = 4 order by id desc")
+    else :
+        cur.execute("SELECT * from product where category_id = '%s' order by id desc" % str(cateogry_id))
+    
+    rv = cur.fetchall()
+    products = []
+    content = {}
+    
+    for result in rv:
+       content = {'id': result['id'], 'name': result['name'], 'description': result['description'], 'image_location': result['image_location'], 'price': float(result['price']), 'stock': result['stock'] }
+       products.append(content)
+       content = {}
+    
+    return jsonify(category, products)
 
+
+
+
+
+@app.route('/search/<data>', methods = ['GET'])
+def search_product(data):
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    likeString = "%" + str(data) + "%"
+    cur.execute("SELECT * FROM category WHERE name LIKE '%s'order by id desc" % likeString)
+    rv = cur.fetchall()
+    category = []
+    content = {}
+    
+    for result in rv:
+       content = {'name': result['name'], 'description': result['description'] }
+       category.append(content)
+       content = {}
+       
+    cur.execute("SELECT * FROM product WHERE name LIKE '%s'order by id desc" % likeString)
+    rv = cur.fetchall()
+    products = []
+    content = {}
+    
+    for result in rv:
+       content = {'id': result['id'], 'name': result['name'], 'description': result['description'], 'image_location': result['image_location'], 'price': float(result['price']), 'stock': result['stock'] }
+       products.append(content)
+       content = {}
+    return jsonify(category, products)
