@@ -7,7 +7,7 @@ CREATE TABLE  category  (
 );
 
 INSERT into category (name, description,created_at) values ('computer', '',NOW( ) )
-INSERT into category (name, description,created_at) values ('Ipads/Tablets', '',NOW() )
+INSERT into category (name, description,created_at) values ('ipads', '',NOW() )
 INSERT into category (name, description,created_at) values ('tablet', '',NOW() )
 INSERT into category (name, description,created_at) values ('headset', '',NOW() )
 INSERT into category (name, description,created_at) values ('charger', '',NOW() )
@@ -17,7 +17,8 @@ INSERT into category (name, description,created_at) values ('mouse', '',NOW() )
 INSERT into category (name, description,created_at) values ('case', '',NOW() )
 INSERT into category (name, description,created_at) values ('laptop', '',NOW() )
 INSERT into category (name, description,created_at) values ('chromBook', '',NOW( ) )
-select * FROM category 
+
+SELECT * FROM  category c 
 Update category 
 	SET name = 'ipad'
 	where name = 'Ipads/Tablets'
@@ -25,6 +26,7 @@ Update category
 delete from category WHERE id = 12
 UPDATE category set name = 'ipad' where id = 2
 ALTER TABLE category AUTO_INCREMENT = 1;
+
 
 
 CREATE TABLE  product  (
@@ -39,8 +41,7 @@ CREATE TABLE  product  (
   PRIMARY KEY (id),
   FOREIGN KEY (category_id) REFERENCES category(id)
 );
-ALTER TABLE product 
-ADD COLUMN image_location varchar(200) AFTER image;
+
 INSERT into product  (name, price, description,image, image_location  ,stock, created_at, category_id) values ('MacBook Pro', 1499.99, 'Apple 13.3 MacBook Pro with Retina Display,Silver 2020',LOAD_FILE('/static/images/cases.jpg'), '/static/images/cases.jpg',8, NOW(), 10)
 INSERT into product  (name, price, description,image, image_location  ,stock, created_at, category_id) values ('Apple ipad', 699.99, 'Apple iPad Mini 6th Generation-Tablet-64 GB',LOAD_FILE('/static/images/ipad1.jpeg'), '/static/images/ipad1.jpeg',20, NOW(), 2 )
 INSERT into product  (name, price, description,image, image_location  ,stock, created_at, category_id) values ('Apple iPad Pro', 299.00, 'Apple iPad Pro 9.7 128Gb Silver Refurbished',LOAD_FILE('/static/images/ipad2.jpg'), '/static/images/ipad2.jpg',15, NOW(), 2 )
@@ -82,27 +83,37 @@ INSERT into product  (name, price, description,image, image_location  ,stock, cr
 INSERT into product  (name, price, description,image, image_location  ,stock, created_at, category_id) values ('JBL GTO609C Speaker',29.95,'JBL GTO609C Premium 6.5-Inch Speaker',LOAD_FILE('/static/images/img8.jpeg'), '/static/images/img8.jpeg',29, NOW(), 7)
 
 
-INSERT INTO pictures VALUES(1, LOAD_FILE('d:\\flower.gif'));
+
 SELECT * FROM  product p 
 DELETE FROM product WHERE id = 38
 ALTER TABLE product  AUTO_INCREMENT = 1;
+ALTER TABLE product 
+ADD COLUMN image_location varchar(200) AFTER image;
 Update product 
 	SET id = 33
 	where id = 34
 Update product 
 	SET category_id = 11
 	where category_id = 10
+Update product 
+	SET description  = '2GB RAM,32GB ROM,Quad'
+	where description  ='2GB RAM,32GB ROM,Quad Core,'
 
-
-CREATE TABLE  user_role  (
-   id  int  NOT NULL AUTO_INCREMENT,
-   name  varchar(10),
+Update product 
+	SET name  = 'Pokémon Legends'
+	where name  = 'Pokémon Legends: Arceus'
+	
+	
+CREATE TABLE user_role (
+   id int NOT NULL AUTO_INCREMENT,
+   name varchar(10),
    PRIMARY KEY (id)
 );
 INSERT INTO user_role (name) values ('admin')
 INSERT INTO user_role (name) values ('customer')
 INSERT INTO user_role (name) values ('manager')
 select * FROM user_role 
+
 
 
 CREATE TABLE  users  (
@@ -128,6 +139,8 @@ values ('Shakiba','Abdul Sattar','sabdulsattar9429@sdsu.edu','123453','4321 adam
 INSERT into users (firstname,lastname,email,password,address,city,State,zipcode,country,phone,created_at,user_role_id)values ('Shahad','Al Neesan','shahadd_88@yahoo.com','124456','5621 adams Ave', 'San Diego','california','92126','USA','619-9135467',NOW(), 1)
 
 select * FROM users
+
+
 
 CREATE TABLE  orders  (
   id  int NOT NULL AUTO_INCREMENT,
@@ -158,3 +171,18 @@ CREATE TABLE  order_details  (
   FOREIGN KEY (product_id) REFERENCES product(id)
  );
 
+SELECT * from category order by id desc
+
+SELECT * from product where category_id = 8 OR category_id = 9 order by id desc
+
+-- Select * from category where name like %comp%
+SELECT * FROM category WHERE name LIKE '%ch%';
+
+
+SELECT * from product where category_id = 2 OR category_id = 4 order by id desc
+SELECT * from product where category_id = 8 OR category_id = 9 order by id desc
+SELECT * from product where category_id = 6 order by id desc
+
+SELECT * from product where category_id = 3 order by id desc
+SELECT * from product where category_id = 5 order by id desc
+SELECT * from product where category_id = 10 order by id desc
