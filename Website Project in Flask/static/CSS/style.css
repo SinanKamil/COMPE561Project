@@ -408,3 +408,26 @@ span.psw {
   }
 
 }
+
+/* search bar result */
+.search-result {
+  background: white;
+  position: absolute;
+  margin-top: 2px;
+  width: 12%;
+  border-radius: 4px;
+  z-index: 1;
+}
+
+
+
+.search-result ul {
+  list-style: none;
+  margin-bottom: 0px;
+  margin-left: -19%;
+}
+
+.search-result ul :hover{
+  cursor: pointer;
+  background-color: #888;
+}
