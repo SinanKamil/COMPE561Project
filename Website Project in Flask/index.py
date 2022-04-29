@@ -39,7 +39,19 @@ def index():
 # computers page
 @app.route("/computers")
 def computers_page():
-    return render_template('computers.html')
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("SELECT * from product where category_id = 1 order by id desc")
+    rv = cur.fetchall()
+    # return str(rv)
+    products = []
+    content = {}
+    
+    for result in rv:
+       content = {'id': result['id'], 'name': result['name'], 'description': result['description'], 'image_location': result['image_location'], 'price': float(result['price']), 'stock': result['stock'] }
+       products.append(content)
+       content = {}
+    # return jsonify(products)
+    return render_template('computers.html', products = products)
 
 
 #Phones page
@@ -285,18 +297,6 @@ def search_product(data):
        content = {}
     return jsonify(category, products)
 
-@app.route("/login", methods=["POST", "GET"])
-def login():
-    if request.method == "POST":
-        session.permanent = True
-        username = request.form["username"]
-        session["surname"] = username
-        return render_template("index.html")
-    else:
-        if "user" in session:
-            return render_template("index.html")
-
-        return render_template("login.html")
     
     
 @app.route("/logout")

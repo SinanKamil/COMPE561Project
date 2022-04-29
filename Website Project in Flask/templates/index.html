@@ -2,7 +2,9 @@
 
 {% block title %}Home-Page{% endblock %}
 
+
 {% block body %}
+
 
 
 {% for product in products %}
@@ -46,6 +48,8 @@
   {% if session['user'] %}
   <h4>You login as {{session['user']}}</h4>
   {% endif %}
+
+  
   <!-- div for cards -->
   <div class="col-md-12" style="width:100%;  margin: 0 auto;">
     <div class="row" style="justify-content: center;">
