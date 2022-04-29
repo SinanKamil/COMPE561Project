@@ -7,68 +7,86 @@
 <h3 class="text-center">mics/speakers Accessories</h3>
 <div class="col-md-11" style="width: 80%; margin: 0 auto;">
     <div class="row">
+{% for product in products %}
+
         <div class="card" style="width: 16rem; margin: 3%; height: 560px;">
-            <img src="/static/images/img9.jpeg" class="card-img-top"  width="100" height= "330" alt="speakerImage">
+            <img src={{product.image_location}} class="card-img-top" width="100" height="330" alt="headseImage">
             <div class="card-body">
-                <h4 class="card-title">ION Speaker</h4>
-                <h6>69.00$</h6>
-                <p class="card-text">ION Audio Block Rocker,Bluetooth,100W Battery, Microphone </p>
-                <a href="#" class="btn btn-primary">Add <i class="fas fa-shopping-cart"></i></a>
+                <h4 class="card-title">{{product.name}}</h4>
+                <h6>${{product.price}}</h6>
+                <p class="card-text">{{product.description}}<br>{{product.stock}} in-stock</p>
+                <a href="#" class="btn btn-primary" style="width: 100%"> Add <i class="fas fa-shopping-cart"></i></a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- <h3 class="text-center">mics/speakers Accessories</h3>
+<div class="col-md-11" style="width: 80%; margin: 0 auto;">
+    <div class="row">
+        <div class="card" style="width: 16rem; margin: 3%; height: 560px;">
+            <img src="/static/images/speaker1.jpg" class="card-img-top"  width="100" height= "330" alt="speakerImage">
+            <div class="card-body">
+                <h4 class="card-title">Lezii Speaker</h4>
+                <h6>30.00$</h6>
+                <p class="card-text"> Portable,IP67,FM Radio, Waterproof Speaker</p>
+                <a href="#" class="btn btn-primary" style="width: 100%"> Add <i class="fas fa-shopping-cart"></i></a>
             </div>
         </div>
 
         <div class="card" style="width: 16rem; margin: 3%; height: 560px;">
-            <img src="/static/images/img8.jpeg" class="card-img-top" width="100" height= "330" alt="SpeakerImage">
+            <img src="/static/images/speaker2.jpg" class="card-img-top" width="100" height= "330" alt="SpeakerImage">
             <div class="card-body">
-                <h5 class="card-title">JBL GTO609C Speaker</h4>
-                <h6>29.95$</h6>
-                <p class="card-text">JBL GTO609C Premium 6.5-Inch Speaker</p>
-                <a href="#" class="btn btn-primary">Add <i class="fas fa-shopping-cart"></i></a>
+                <h5 class="card-title">Emeet Luna Speaker</h4>
+                <h6>86.95$</h6>
+                <p class="card-text">Bluetooth,Noise Reduction Algorithm USB Speaker </p>
+                <a href="#" class="btn btn-primary" style="width: 100%"> Add <i class="fas fa-shopping-cart"></i></a>
             </div>
         </div>
 
         <div class="card" style="width: 16rem; margin: 3%; height: 560px;">
-            <img src="https://m.media-amazon.com/images/I/71XpwOsJmUL._AC_SL1500_.jpg"
+            <img src="/static/images/speaker3.jpg"
                 class="card-img-top"  width="100" height= "330" alt="SpeakerImage">
             <div class="card-body">
-                <h4 class="card-title">Dindin Speaker</h4>
-                <h6>39.99$</h6>
-                <p class="card-text">DINDIN Bluetooth Speaker,Portable Wireless, Double Heavy Bass</p>
-                <a href="#" class="btn btn-primary">Add <i class="fas fa-shopping-cart">  </i></a> 
+                <h4 class="card-title">Sony Speaker</h4>
+                <h6>59.99$</h6>
+                <p class="card-text">XB13 Wireless,Waterproof Bluetooth Speaker</p>
+                <a href="#" class="btn btn-primary" style="width: 100%"> Add <i class="fas fa-shopping-cart"></i></a>
             </div>
         </div>
         <div class="card" style="width: 16rem; margin: 3%; height: 560px;">
-            <img src="https://m.media-amazon.com/images/I/81FJJkFhlEL._AC_SL1500_.jpg"
+            <img src="/static/images/speaker4.jpg"
                 class="card-img-top" width="100" height= "330" alt="SpeakerImage">
             <div class="card-body">
-                <h4 class="card-title">KAPPA Speakers</h4>
-                <h6>19.99$</h6>
-                <p class="card-text">Infinity KAPPA-60CSX 6.5" Component Speakers</p>
-                <a href="#" class="btn btn-primary">Add <i class="fas fa-shopping-cart">  </i></a>
+                <h4 class="card-title">Shidu Speaker</h4>
+                <h6>43.99$</h6>
+                <p class="card-text">Portable,Rechargeable,Wired Microphone Speaker</p>
+                <a href="#" class="btn btn-primary" style="width: 100%"> Add <i class="fas fa-shopping-cart"></i></a>
             </div>
         </div>
         <div class="card" style="width: 16rem; margin: 3%; height: 560px;">
-            <img src="https://m.media-amazon.com/images/I/81ayiXd8eHL._AC_SL1500_.jpg"
+            <img src="/static/images/speaker5.jpg"
                 class="card-img-top" width="100" height= "330" alt="SpeakerImage">
             <div class="card-body">
-                <h4 class="card-title">Treblab Speaker</h4>
-                <h6>89.97$</h6>
-                <p class="card-text">STREBLAB HD77 Bluetooth Speaker with Loud 360° HD,Wireless Pairing Battery</p>
-                <a href="#" class="btn btn-primary">Add <i class="fas fa-shopping-cart">  </i></a> 
+                <h4 class="card-title">Ortizan Speaker</h4>
+                <h6>40.97$</h6>
+                <p class="card-text">Portable,30H Playtime, Waterproof Speaker</p>
+                <a href="#" class="btn btn-primary" style="width: 100%"> Add <i class="fas fa-shopping-cart"></i></a>
                 
             </div>
         </div>
         <div class="card" style="width: 16rem; margin: 3%; height: 560px;">
-            <img src="https://m.media-amazon.com/images/I/71kxouQdhjS._AC_SL1500_.jpg"
+            <img src="/static/images/speaker6.jpg"
                 class="card-img-top" width="100" height= "330" alt="SpeakerImage">
             <div class="card-body">
-                <h4 class="card-title">Karoke Speaker</h4>
-                <h6>62.00$</h6>
-                <p class="card-text">M200 Bluetooth Speaker with Microphone Wireless</p>
-                <a href="#" class="btn btn-primary">Add <i class="fas fa-shopping-cart">  </i></a> 
+                <h4 class="card-title">Dikaou Speaker</h4>
+                <h6>40.00$</h6>
+                <p class="card-text">Torch Atmosphere Bluetooth Speaker</p>
+                <a href="#" class="btn btn-primary" style="width: 100%"> Add <i class="fas fa-shopping-cart"></i></a>
                 
             </div>
         </div>
     </div>
-</div>
+</div> -->
 {% endblock  %}

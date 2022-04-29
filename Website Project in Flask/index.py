@@ -1,9 +1,7 @@
-import flask
-from flask import request, jsonify, make_response, render_template
-from flask import Flask
+from flask import Flask, jsonify, redirect, url_for, render_template, request, session
 from flask_mysqldb import MySQL, MySQLdb
 app = Flask(__name__)
-
+app.secret_key = "hello"
 
 
 
@@ -47,8 +45,19 @@ def computers_page():
 #Phones page
 @app.route("/phones")
 def phones_page():
-    return render_template('phones.html')
-    #return "<h1>phones  adress</h1>"
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("SELECT * from product where category_id = 13 order by id desc")
+    rv = cur.fetchall()
+    # return str(rv)
+    products = []
+    content = {}
+    
+    for result in rv:
+       content = {'id': result['id'], 'name': result['name'], 'description': result['description'], 'image_location': result['image_location'], 'price': float(result['price']), 'stock': result['stock'] }
+       products.append(content)
+       content = {}
+    # return jsonify(products)
+    return render_template('phones.html', products = products )
         
 
 #ipad & tablets me page
@@ -74,9 +83,19 @@ def accessories_page():
     return render_template('accessories.html')
 
 # userlogin page
-@app.route("/userlogin")
+@app.route("/userlogin", methods=["POST", "GET"])
 def userlogin_page():
-    return render_template('userlogin.html')
+    if request.method == "POST":
+        session.permanent = True
+        user = request.form["username"]
+        session["user"] = user
+        print(user)
+        return render_template("index.html")
+    
+    else:
+        if "user" in session:
+            return render_template("index.html")
+        return render_template('userlogin.html')
 
 # user sign up page
 @app.route("/usersignup")
@@ -265,3 +284,22 @@ def search_product(data):
        products.append(content)
        content = {}
     return jsonify(category, products)
+
+@app.route("/login", methods=["POST", "GET"])
+def login():
+    if request.method == "POST":
+        session.permanent = True
+        username = request.form["username"]
+        session["surname"] = username
+        return render_template("index.html")
+    else:
+        if "user" in session:
+            return render_template("index.html")
+
+        return render_template("login.html")
+    
+    
+@app.route("/logout")
+def logout():
+    session.pop("user", None)
+    return redirect(url_for("userlogin_page"))

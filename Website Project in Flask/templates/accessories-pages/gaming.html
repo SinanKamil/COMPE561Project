@@ -55,9 +55,9 @@
       <img src={{product.image_location}} class="card-img-top" width="100" height="330" alt="GTAImage">
       <div class="card-body">
         <h4 class="card-title">{{product.name}}</h4>
-        <h6>{{product.price}}$</h6>
-        <p class="card-text">{{product.description}}<br>{{product.stock}} instock</p>
-        <a href="#" class="btn btn-primary">Add <i class="fas fa-shopping-cart"></i></a>
+        <h6>${{product.price}}</h6>
+        <p class="card-text">{{product.description}}<br>{{product.stock}} in-stock</p>
+        <a href="#" class="btn btn-primary" style="width: 100%"> Add <i class="fas fa-shopping-cart"></i></a>
       </div>
     </div>
     {% endfor %}

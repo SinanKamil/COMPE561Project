@@ -5,9 +5,13 @@ console.log('it is working')
 
 
 var input = document.getElementsByClassName("search-input");
-input.addEventListener("keyup", function(event) {
+input.addEventListener("on", function(event) {
   if (event.keyCode === 13) {
    event.preventDefault();
    console.log(event);
   }
 });
+
+function myFunction(val) {
+    alert("The input value has changed. The new value is: " + val);
+}
