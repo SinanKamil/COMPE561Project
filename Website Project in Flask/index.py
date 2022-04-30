@@ -119,9 +119,15 @@ def usersignup_page():
         lastName = request.form["lastName"]
         email = request.form["email"]
         password = request.form["password"]
+
         # register to the database
+        cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cur.execute("""insert into users (firstname, lastname, email,password) values (%s,%s,%s,%s); """ , (firstName, lastName, email, password))
+        mysql.connection.commit()
+
+        # make sure the entered user is existing 
         session["user"] = email
-        return render_template("index.html")
+        return render_template("index.html") 
     else:
         # calling // signup
         if "user" in session:
