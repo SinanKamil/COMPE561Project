@@ -110,9 +110,23 @@ def userlogin_page():
         return render_template('userlogin.html')
 
 # user sign up page
-@app.route("/usersignup")
+@app.route("/usersignup", methods=["POST", "GET"])
 def usersignup_page():
-    return render_template('usersignup.html')
+    #action
+    if request.method == "POST":
+        session.permanent = True
+        firstName = request.form["firstName"]
+        lastName = request.form["lastName"]
+        email = request.form["email"]
+        password = request.form["password"]
+        # register to the database
+        session["user"] = email
+        return render_template("index.html")
+    else:
+        # calling // signup
+        if "user" in session:
+            return render_template("index.html")
+        return render_template('usersignup.html')
 
 
 # contact me page
