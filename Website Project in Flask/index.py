@@ -99,11 +99,23 @@ def accessories_page():
 def userlogin_page():
     if request.method == "POST":
         session.permanent = True
-        user = request.form["username"]
-        session["user"] = user
-        print(user)
-        return render_template("index.html")
-    
+        email = request.form["email"]
+        password = request.form["password"]
+        
+        # check in database
+        cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cur.execute("""SELECT 1 from users where email = %s and password = %s""", (email, password))
+        rv = cur.fetchall()
+        response = str(rv)
+        
+        if response == "({'1': 1},)":
+            session["user"] = email
+            return render_template("index.html")
+        else:
+            # return erro to login
+            print('passworsd or email is wrong')
+            return render_template('userlogin.html')
+            
     else:
         if "user" in session:
             return render_template("index.html")
