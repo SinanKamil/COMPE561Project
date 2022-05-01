@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block title %}Ipads-Page{% endblock  %}
+{% block title %}Ipads-Page{% endblock %}
 
 {% block body %}
 
@@ -12,15 +12,14 @@
 
         <div class="card" style="width: 16rem; margin: 4%; height: 560px;">
             <div class="pic" style="margin-top: 4%;">
-              <img src={{product.image_location}}
-                class="card-img-top"  width="100" height= "330" alt="">
+                <img src={{product.image_location}} class="card-img-top" width="100" height="330" alt="">
             </div>
             <div class="card-body">
                 <h4 class="card-title"> {{product.name}}</h4>
                 <h6>${{product.price}}</h6>
                 <p class="card-text">{{product.description}}<br>{{product.stock}} in-stock</p>
                 <a href="#" class="btn btn-primary" style="width: 100%"> Add <i class="fas fa-shopping-cart"></i></a>
-               
+
             </div>
         </div>
 
@@ -94,4 +93,4 @@
         </div>
     </div>
 </div> -->
-{% endblock  %}
+{% endblock %}
