@@ -276,7 +276,28 @@ def usersignup_page():
         if "user" in session:
             return render_template("index.html")
         return render_template('usersignup.html')
-    
+   
+@app.route("/addcategory", methods=["POST", "GET"])
+def addcategory_page():
+    #action
+    if request.method == "POST":
+        name = request.form["name"]
+        description = request.form["description"]
+        
+
+        # register to the database
+        cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cur.execute("""insert into category (name, description) values (%s,%s); """ , (name, description))
+        mysql.connection.commit()
+
+        # make sure the entered user is existing 
+       
+        return render_template("index.html") 
+    else:
+        # calling // signup
+        if "user" in session:
+            return render_template("addcategory.html")
+        return render_template('login.html') 
   
   # logout page  
 @app.route("/logout")
