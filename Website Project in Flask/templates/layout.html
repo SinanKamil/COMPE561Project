@@ -54,6 +54,12 @@
 		      </li>
 			  {% endif %}
 
+        {% if session['role']=='admin' %}
+			  <li class="nav-item">
+		        <a class="nav-link" href="#">Add CATEGORY</a>
+		      </li>
+			  {% endif %}
+
         {% if session['user'] %}
 				<p style="margin-top: 0.5rem;">{{session['user']}}</p>
 			{% endif %}

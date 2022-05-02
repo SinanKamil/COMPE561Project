@@ -228,7 +228,6 @@ def userlogin_page():
         cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cur.execute("""SELECT email, user_role_id from users where email = %s and password = %s""", (email, password))
         rv = cur.fetchall()
-        userInfos = []
         content = {}
     
         result = rv[0]
@@ -283,6 +282,7 @@ def usersignup_page():
 @app.route("/logout")
 def logout():
     session.pop("user", None)
+    session.pop("role", None)
     return redirect(url_for("userlogin_page"))
 
 
