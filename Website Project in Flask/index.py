@@ -1,8 +1,8 @@
+
 from flask import Flask, jsonify, redirect, url_for, render_template, request, session
 from flask_mysqldb import MySQL, MySQLdb
 app = Flask(__name__)
 app.secret_key = "hello"
-
 
 
 # Required
@@ -13,9 +13,10 @@ app.config["MYSQL_DB"] = "e-Shop"
 
 mysql = MySQL(app)
 
+# home-page
 @app.route('/' , methods=['GET', 'POST'])
 def index():
-    # crate cursor and connection to database
+        # crate cursor and connection to database
     cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     # call this query when called
     cur.execute("SELECT * from product")
@@ -89,72 +90,14 @@ def Ipads_page():
     # return jsonify(products)
     return render_template('ipads.html', products = products )
 
+
 #Accessories me page
 @app.route("/accessories")
 def accessories_page():
     return render_template('accessories.html')
 
-# userlogin page
-@app.route("/userlogin", methods=["POST", "GET"])
-def userlogin_page():
-    if request.method == "POST":
-        session.permanent = True
-        email = request.form["email"]
-        password = request.form["password"]
-        
-        # check in database
-        cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cur.execute("""SELECT 1 from users where email = %s and password = %s""", (email, password))
-        rv = cur.fetchall()
-        response = str(rv)
-        
-        if response == "({'1': 1},)":
-            session["user"] = email
-            return render_template("index.html")
-        else:
-            # return erro to login
-            print('passworsd or email is wrong')
-            return render_template('userlogin.html')
-            
-    else:
-        if "user" in session:
-            return render_template("index.html")
-        return render_template('userlogin.html')
 
-# user sign up page
-@app.route("/usersignup", methods=["POST", "GET"])
-def usersignup_page():
-    #action
-    if request.method == "POST":
-        session.permanent = True
-        firstName = request.form["firstName"]
-        lastName = request.form["lastName"]
-        email = request.form["email"]
-        password = request.form["password"]
-
-        # register to the database
-        cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cur.execute("""insert into users (firstname, lastname, email,password) values (%s,%s,%s,%s); """ , (firstName, lastName, email, password))
-        mysql.connection.commit()
-
-        # make sure the entered user is existing 
-        session["user"] = email
-        return render_template("index.html") 
-    else:
-        # calling // signup
-        if "user" in session:
-            return render_template("index.html")
-        return render_template('usersignup.html')
-
-
-# contact me page
-@app.route("/contact")
-def contact_page():
-    return render_template('contact.html')
-
-
-# accessories elements
-
+ # accessories elements
 
 # charger page in accessorires-page
 @app.route("/accessories/chargers")
@@ -229,6 +172,24 @@ def speakers():
     return render_template('/accessories-pages/speakers.html', products = products )
     
 
+# keyboard/mouse page in accessories-page
+@app.route("/accessories/keyboard/mouse")
+def keyboard():
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("SELECT * from product where category_id = 8 OR category_id = 9 order by id desc")
+    rv = cur.fetchall()
+    # return str(rv)
+    products = []
+    content = {}
+    
+    for result in rv:
+       content = {'id': result['id'], 'name': result['name'], 'description': result['description'], 'image_location': result['image_location'], 'price': float(result['price']), 'stock': result['stock'] }
+       products.append(content)
+       content = {}
+    # return jsonify(products)
+    return render_template('/accessories-pages/keyboard.html', products = products )
+    
+    
 # phone/ipads cases page in accessories-page
 @app.route("/accessories/phone/ipads cases")
 def cases():
@@ -247,23 +208,94 @@ def cases():
     return render_template('/accessories-pages/cases.html', products = products )
     
 
-# keyboard/mouse page in accessories-page
-@app.route("/accessories/keyboard/mouse")
-def keyboard():
-    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cur.execute("SELECT * from product where category_id = 8 OR category_id = 9 order by id desc")
-    rv = cur.fetchall()
-    # return str(rv)
-    products = []
-    content = {}
+
+# contact me page
+@app.route("/contact")
+def contact_page():
+    return render_template('contact.html')
+
+
+
+# userlogin page
+@app.route("/userlogin", methods=["POST", "GET"])
+def userlogin_page():
+    if request.method == "POST":
+        session.permanent = True
+        email = request.form["email"]
+        password = request.form["password"]
+        
+        # check in database
+        cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cur.execute("""SELECT email, user_role_id from users where email = %s and password = %s""", (email, password))
+        rv = cur.fetchall()
+        userInfos = []
+        content = {}
     
-    for result in rv:
-       content = {'id': result['id'], 'name': result['name'], 'description': result['description'], 'image_location': result['image_location'], 'price': float(result['price']), 'stock': result['stock'] }
-       products.append(content)
-       content = {}
-    # return jsonify(products)
-    return render_template('/accessories-pages/keyboard.html', products = products )
+        result = rv[0]
+        content = {'email': result['email'], 'user_role': result['user_role_id'] }
+        
+        if result:
+            session["user"] = email
+            session["role"] = 'normal'
+            if content['user_role'] == 1:
+                session["role"] = 'admin'
+            return render_template("index.html")
+            
+        else:
+            # return erro to login
+            print('passworsd or email is wrong')
+            return render_template('userlogin.html')
+            
+    else:
+        if "user" in session:
+            return render_template("index.html")
+        return render_template('userlogin.html')
+
+
+
+# user sign up page
+@app.route("/usersignup", methods=["POST", "GET"])
+def usersignup_page():
+    #action
+    if request.method == "POST":
+        session.permanent = True
+        firstName = request.form["firstName"]
+        lastName = request.form["lastName"]
+        email = request.form["email"]
+        password = request.form["password"]
+
+        # register to the database
+        cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cur.execute("""insert into users (firstname, lastname, email,password) values (%s,%s,%s,%s); """ , (firstName, lastName, email, password))
+        mysql.connection.commit()
+
+        # make sure the entered user is existing 
+        session["user"] = email
+        return render_template("index.html") 
+    else:
+        # calling // signup
+        if "user" in session:
+            return render_template("index.html")
+        return render_template('usersignup.html')
     
+  
+  # logout page  
+@app.route("/logout")
+def logout():
+    session.pop("user", None)
+    return redirect(url_for("userlogin_page"))
+
+
+
+
+
+
+
+
+
+
+
+     
 @app.route('/category/<int:cateogry_id>', methods = ['GET'])
 def get_category_by_id(cateogry_id):
     cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -331,7 +363,3 @@ def search_product(data):
 
     
     
-@app.route("/logout")
-def logout():
-    session.pop("user", None)
-    return redirect(url_for("userlogin_page"))

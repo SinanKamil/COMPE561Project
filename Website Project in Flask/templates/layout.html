@@ -74,8 +74,11 @@
 
         </div>
        
-         <a class="icons-page" href="/userlogin"><i class="far fa-user"></i></a>
+        {% if session['user'] %}
+        <a class="icons-page" href="#"><i class="far fa-user"></i></a>
         <a class="icons-page" href="#"><i class="fas fa-shopping-cart"><span class="num-cart-product">10</span></i></a>
+			  {% endif %}
+        
       </div>
     </div>
   </nav>
