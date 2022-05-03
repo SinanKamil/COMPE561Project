@@ -77,7 +77,15 @@
           <div class="icon"><i class="fas fa-search" ></i></div>
         </div>
           </div> 
-          <a class="icons-page" href="/userlogin"><i class="far fa-user"></i></a>
+          <a class="icons-page" href="/userlogin"><i class="far fa-user"></i>{% if session['user'] %}
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="/userlogin">Login</a>
+              </li>
+            {% endif %}</a>
           <a class="icons-page" href="#"><i class="fas fa-shopping-cart"><span class="num-cart-product">0</span></i></a>
       </div>
       </div>
