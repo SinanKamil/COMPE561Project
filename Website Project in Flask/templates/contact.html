@@ -2,69 +2,48 @@
 
 {% block title %}contact-Page{% endblock %}
 {% block body %}
-<section id="last">
-  <!-- heading -->
-  <div class="full">
-    <h3>Drop a Message</h3>
-
-    <div class="lt">
-
-      <!-- form starting  -->
-      <form class="form-horizontal" method="post" action="contact.php">
-        <div class="form-group">
-          <div class="col-sm-12">
-            <!-- name  -->
-            <input type="text" class="form-control" id="name" placeholder="NAME" name="name" value="" />
-          </div>
+<div class="container">
+  <div class="contact-parent">
+     <div class="contact-child child1">
+        <p>
+           <i class="fas fa-map-marker-alt"></i> Address <br />
+           <span> 1234 Street AVE
+           <br />
+           CA, USA
+           </span>
+        </p>
+        <p>
+           <i class="fas fa-phone-alt"></i> Call Us at <br />
+           <span> 123-123_3456</span>
+        </p>
+        <p>
+           <i class=" far fa-envelope"></i> General Support <br />
+           <span>eShope@example.com</span>
+        </p>
+     </div>
+     <div class="contact-child child2">
+        <div class="inside-contact">
+           <h2>Contact Us</h2>
+           <h3>
+              <span id="confirm">
+           </h3>
+           <p>Name *</p>
+           <input id="txt_name" type="text" Required="required">
+           <p>Email *</p>
+           <input id="txt_email" type="text" Required="required">
+           <p>Phone *</p>
+           <input id="txt_phone" type="text" Required="required">
+           <p>Subject *</p>
+           <input id="txt_subject" type="text" Required="required">
+           <p>Message *</p>
+           <textarea id="txt_message" rows="4" cols="20" Required="required" ></textarea>
+           <p id="demo"> </p>
+           <button type="button" class = "block" onclick='document.getElementById("demo").innerHTML = "Email Sent Successufully!!!"'>Send!</button>
+          
         </div>
-
-        <div class="form-group">
-          <div class="col-sm-12">
-            <!-- email  -->
-            <input type="email" class="form-control" id="email" placeholder="EMAIL" name="email" value="" />
-          </div>
-        </div>
-        <!-- message  -->
-        <textarea class="form-control" rows="10" placeholder="MESSAGE" name="message">
-      </textarea>
-
-        <button class="btn btn-primary send-button" id="submit" type="submit" value="SEND">
-          <i class="fa fa-paper-plane"></i>
-          <span class="send-text">SEND</span>
-        </button>
-      </form>
-      <!-- end of form -->
-    </div>
-    <!-- Contact information -->
-    <div class="rt">
-      <ul class="contact-list">
-        <li class="list-item">
-          <i class="fa fa-map-marker fa-1x">
-            <span class="contact-text place">
-              1122 Street AVE
-              92019,San Diego, CA
-            </span>
-          </i>
-        </li>
-
-        <li class="list-item">
-          <i class="fa fa-envelope fa-1x">
-            <span class="contact-text gmail">
-              <a href="mailto:yourmail@gmail.com" title="Send me an email">
-                email@gmail.com</a>
-            </span>
-          </i>
-        </li>
-
-        <li class="list-item">
-          <i class="fa fa-phone fa-1x">
-            <span class="contact-text phone">
-              123-465-3456
-            </span>
-          </i>
-        </li>
-      </ul>
-    </div>
+     </div>
   </div>
-</section>
+</div>
+
+
 {% endblock %}
