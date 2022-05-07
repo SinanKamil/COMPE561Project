@@ -234,7 +234,13 @@ def userlogin_page():
         cur.execute("""SELECT email, user_role_id from users where email = %s and password = %s""", (email, password))
         rv = cur.fetchall()
         content = {}
+        errMessage = ''
     
+        if len(rv) == 0:
+            errMessage = 'password or email does not match'
+            return render_template('userlogin.html', errMessage = errMessage)
+        
+        
         result = rv[0]
         content = {'email': result['email'], 'user_role': result['user_role_id'] }
         
@@ -315,9 +321,9 @@ def deletecategory(id):
     cur.execute("DELETE FROM category WHERE  id= %s", [id])
     mysql.connection.commit()
     return redirect("/") 
-   
-    
-    
+
+
+ 
     
     #add product for Admin  
 @app.route("/addproduct", methods=["POST", "GET"])
@@ -343,6 +349,35 @@ def addproduct_page():
             return render_template("addproduct.html")
         return render_template('login.html') 
     
+    
+    # delete ipads  for admin
+@app.route("/deleteipads/<int:id>")
+def deleteipads(id):
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("DELETE FROM product WHERE  id= %s", [id])
+    mysql.connection.commit()
+    return redirect("/ipads") 
+
+
+# delete computer  for admin
+# @app.route("/deletecomputers/<int:id>")
+# def deletecomputers(id):
+#     cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+#     cur.execute("DELETE FROM product WHERE  id= %s", [id])
+#     mysql.connection.commit()
+#     return redirect("/computers") 
+
+# delete Phone  for admin
+@app.route("/deletecomputers/<int:id>")
+def deletecomputers(id):
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("DELETE FROM product WHERE  id= %s", [id])
+    mysql.connection.commit()
+    return redirect("/computers") 
+    
+    
+    
+      
     
     #delete product for Admin  
 @app.route("/deleteproduct", methods=["POST", "GET"])
