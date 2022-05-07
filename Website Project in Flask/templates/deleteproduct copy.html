@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block title %}Home-Page{% endblock %}
+
+{% block body %}
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    </head>
+    
+    
+    </div>
+      <form class="modal-content animate" method="post">
+        <div class="imgcontainer">
+            <div class="center"><h2>delete Product</h2></div>
+          <img src="/static/images/eShope.png" alt="logo Icon" style="width:100px;height:100px;border-radius: 50%;">
+        </div>
+    
+        <div class="container">
+          <label for="name"><b>Name</b></label>
+          <input type="text" placeholder="Enter Name" name="name" required> 
+
+          <label for="price"><b>Price</b></label>
+          <input type="text" placeholder="Enter Price" name="price">
+          
+          <label for="description"><b>Description</b></label>
+          <input type="text" placeholder="Enter Description" name="description">
+          
+          <button type="submit">Save</button>
+          
+        </div>
+        <div class="container" style="background-color:#f1f1f1">
+        
+        </div>
+      </form>
+    
+    
+  
+{% endblock  %}

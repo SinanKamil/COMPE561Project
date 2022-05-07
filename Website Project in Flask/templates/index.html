@@ -40,16 +40,25 @@
   <!-- div for cards -->
   <div class="col-md-12" style="width:100%;  margin: 0 auto;">
     <div class="row" style="justify-content: center;">
-      <a href="/computers" class="card" style="width: 16rem; margin: 3%; text-decoration: none; color: black;">
+      
+      {% for category in categories %}
+      <div class="card" style="width: 16rem; margin: 3%; text-decoration: none; color: black;">
         <div class="pic" style="margin-top: 4%;">
-          <img src="/static/images/image5.jpeg" class="card-img-top" width="100" height="330" alt="">
+          <img src={{category.image_location}} class="card-img-top" width="100" height="330" alt="">
+          <h5 class="card-title text-center">{{category.name}}</h5>
+          <div style="display: flex; justify-content: space-around;">
+            <p><a href="#">details</a></p>
+            <p><a href="/deletecategory/{{category.id}}">delete</a></p>
+           
+          </div>
+          
         </div>
-        <div class="card-body">
-          <h5 class="card-title text-center">Computer</h5>
-        </div>
-      </a>
+      </div>
+      {% endfor %}
 
-      <a href="/phones" class="card" style="width: 16rem; margin: 3%; text-decoration: none; color: black;">
+
+
+       <!-- <a href="/phones" class="card" style="width: 16rem; margin: 3%; text-decoration: none; color: black;">
         <div class="pic" style="margin-top: 4%;">
           <img src="/static/images/image2.jpeg" class="card-img-top w-100" height="330" alt="">
         </div>
@@ -74,7 +83,7 @@
         <div class="card-body">
           <h5 class="card-title text-center">Accessories</h5>
         </div>
-      </a>
+      </a>  -->
 
     </div>
 
@@ -93,3 +102,21 @@
   </section>
 </div>
 {% endblock %}
+
+    <script>
+
+      document.addEventListener("DOMContentLoaded", function(event) { 
+        console.log('js loaded here')
+
+        document.getElementById("search-input").addEventListener("change", displayDate);
+
+        function displayDate() {
+          console.log('value: ', Date())
+        }
+
+        function textbox(value) {
+          console.log('value: ', value)
+        }
+      });
+    </script>
+    

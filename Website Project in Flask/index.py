@@ -1,6 +1,10 @@
 
+from ast import Delete
+from unicodedata import category
 from flask import Flask, jsonify, redirect, url_for, render_template, request, session
 from flask_mysqldb import MySQL, MySQLdb
+# import pymysql
+# from werkzeug import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.secret_key = "hello"
 
@@ -16,25 +20,23 @@ mysql = MySQL(app)
 # home-page
 @app.route('/' , methods=['GET', 'POST'])
 def index():
-        # crate cursor and connection to database
-    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    # call this query when called
-    cur.execute("SELECT * from product")
-    # give the data by calling it
-    rv = cur.fetchall()
-    # return str(rv);
     
-    # store all the data in this array
-    products = []
-    # every single element comes from the database
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("SELECT * from category order by id desc")
+    
+    rv = cur.fetchall()
+    #return str(rv)
+    categories = []
     content = {}
     
     for result in rv:
-       content = {'id': result['id'], 'name': result['name'], 'description': result['description'], 'image_location': result['image_location'], 'price': float(result['price']) }
-       products.append(content)
+       content = {'id': result['id'], 'name': result['name'], 'description': result['description'], 'image_location': result['image_location'] }
+       categories.append(content)
        content = {}
-    #    return jsonify(products)
-    return render_template('index.html')
+    # return jsonify(products)
+  
+    return render_template('index.html', categories = categories )
+    
 
 
 # computers page
@@ -53,6 +55,7 @@ def computers_page():
        content = {}
     # return jsonify(products)
     return render_template('computers.html', products = products)
+
 
 
 #Phones page
@@ -89,6 +92,8 @@ def Ipads_page():
        content = {}
     # return jsonify(products)
     return render_template('ipads.html', products = products )
+
+
 
 
 #Accessories me page
@@ -243,7 +248,8 @@ def userlogin_page():
         else:
             # return erro to login
             print('passworsd or email is wrong')
-            return render_template('userlogin.html')
+            return render_template('usersignup.html')
+            # return "wrong password or email"
             
     else:
         if "user" in session:
@@ -276,7 +282,9 @@ def usersignup_page():
         if "user" in session:
             return render_template("index.html")
         return render_template('usersignup.html')
-   
+ 
+ 
+ #add category for Admin  
 @app.route("/addcategory", methods=["POST", "GET"])
 def addcategory_page():
     #action
@@ -291,13 +299,76 @@ def addcategory_page():
         mysql.connection.commit()
 
         # make sure the entered user is existing 
-       
+    
         return render_template("index.html") 
     else:
         # calling // signup
         if "user" in session:
             return render_template("addcategory.html")
         return render_template('login.html') 
+    
+     
+ # delete category for admin
+@app.route("/deletecategory/<int:id>")
+def deletecategory(id):
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("DELETE FROM category WHERE  id= %s", [id])
+    mysql.connection.commit()
+    return redirect("/") 
+   
+    
+    
+    
+    #add product for Admin  
+@app.route("/addproduct", methods=["POST", "GET"])
+def addproduct_page():
+    #action
+    if request.method == "POST":
+        name = request.form["name"]
+        price = request.form["price"]
+        description = request.form["description"]
+        
+
+        # register to the database
+        cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cur.execute("""insert into product (name, price, description) values (%s,%s, %s); """ , (name, price, description))
+        mysql.connection.commit()
+
+        # make sure the entered user is existing 
+    
+        return render_template("index.html") 
+    else:
+        # calling // signup
+        if "user" in session:
+            return render_template("addproduct.html")
+        return render_template('login.html') 
+    
+    
+    #delete product for Admin  
+@app.route("/deleteproduct", methods=["POST", "GET"])
+def deleteproduct_page():
+    #action
+    if request.method == "POST":
+        name = request.form["name"]
+        # price = request.form["price"]
+        # description = request.form["description"]
+        
+
+        # register to the database
+        cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cur.execute("""DELETE FROM product WHERE  name = %s """, [name] )
+        mysql.connection.commit()
+
+        # make sure the entered user is existing 
+    
+        return render_template("index.html") 
+    else:
+        # calling // signup
+        if "user" in session:
+            return render_template("index.html")
+        return render_template('login.html') 
+  
+  
   
   # logout page  
 @app.route("/logout")
@@ -381,6 +452,121 @@ def search_product(data):
        products.append(content)
        content = {}
     return jsonify(category, products)
+
+
+
+
+
+@app.route('/add', methods=['POST'])
+def add_product_to_cart():
+ try:
+  _quantity = int(request.form['quantity'])
+  id = request.form['id']
+  # validate the received values
+  if _quantity and id and request.method == 'POST':
+   conn = mysql.connect()
+   cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+   cur.execute("SELECT * FROM product WHERE id=%s", id)
+   row = cur.fetchall()
+    
+   itemArray = { row['code'] : {'name' : row['name'], 'code' : row['code'], 'quantity' : _quantity, 'price' : row['price'], 'image' : row['image'], 'total_price': _quantity * row['price']}}
+    
+   all_total_price = 0
+   all_total_quantity = 0
+    
+   session.modified = True
+   if 'cart_item' in session:
+    if row['code'] in session['cart_item']:
+     for key, value in session['cart_item'].items():
+      if row['code'] == key:
+       old_quantity = session['cart_item'][key]['quantity']
+       total_quantity = old_quantity + _quantity
+       session['cart_item'][key]['quantity'] = total_quantity
+       session['cart_item'][key]['total_price'] = total_quantity * row['price']
+    else:
+     session['cart_item'] = array_merge(session['cart_item'], itemArray)
+ 
+    for key, value in session['cart_item'].items():
+     individual_quantity = int(session['cart_item'][key]['quantity'])
+     individual_price = float(session['cart_item'][key]['total_price'])
+     all_total_quantity = all_total_quantity + individual_quantity
+     all_total_price = all_total_price + individual_price
+   else:
+    session['cart_item'] = itemArray
+    all_total_quantity = all_total_quantity + _quantity
+    all_total_price = all_total_price + _quantity * row['price']
+    
+   session['all_total_quantity'] = all_total_quantity
+   session['all_total_price'] = all_total_price
+    
+   return redirect(url_for('.products'))
+  else:
+   return 'Error while adding item to cart'
+ except Exception as e:
+  print(e)
+ finally:
+  cursor.close() 
+  conn.close()
+   
+@app.route('/')
+def products():
+ try:
+  conn = mysql.connect()
+  cursor = conn.cursor(pymysql.cursors.DictCursor)
+  cursor.execute("SELECT * FROM product")
+  rows = cursor.fetchall()
+  return render_template('products.html', products=rows)
+ except Exception as e:
+  print(e)
+ finally:
+  cursor.close() 
+  conn.close()
+ 
+@app.route('/empty')
+def empty_cart():
+ try:
+  session.clear()
+  return redirect(url_for('.products'))
+ except Exception as e:
+  print(e)
+ 
+@app.route('/delete/<string:code>')
+def delete_product(code):
+ try:
+  all_total_price = 0
+  all_total_quantity = 0
+  session.modified = True
+   
+  for item in session['cart_item'].items():
+   if item[0] == code:    
+    session['cart_item'].pop(item[0], None)
+    if 'cart_item' in session:
+     for key, value in session['cart_item'].items():
+      individual_quantity = int(session['cart_item'][key]['quantity'])
+      individual_price = float(session['cart_item'][key]['total_price'])
+      all_total_quantity = all_total_quantity + individual_quantity
+      all_total_price = all_total_price + individual_price
+    break
+   
+  if all_total_quantity == 0:
+   session.clear()
+  else:
+   session['all_total_quantity'] = all_total_quantity
+   session['all_total_price'] = all_total_price
+   
+  return redirect(url_for('.products'))
+ except Exception as e:
+  print(e)
+   
+def array_merge( first_array , second_array ):
+ if isinstance( first_array , list ) and isinstance( second_array , list ):
+  return first_array + second_array
+ elif isinstance( first_array , dict ) and isinstance( second_array , dict ):
+  return dict( list( first_array.items() ) + list( second_array.items() ) )
+ elif isinstance( first_array , set ) and isinstance( second_array , set ):
+  return first_array.union( second_array )
+ return False
+
 
     
     

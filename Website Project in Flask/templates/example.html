@@ -595,4 +595,49 @@ charger-page
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+<div class="col-md-12" style="width:100%;  margin: 0 auto;">
+    <div class="row" style="justify-content: center;">
+  
+      {% for category in categories %}
+  
+      <a href="#" class="card" style="width: 16rem; margin: 3%; text-decoration: none; color: black;">
+        <div class="pic" style="margin-top: 4%;">
+          <img src={{category.image_location}} class="card-img-top" width="100" height="330" alt="">
+        </div>
+        <div class="card-body">
+          <h5 class="card-title text-center">{{category.name}}</h5>
+          <div class="display: block">
+  
+            <a href="/deletecategory{{category.id}}" class="btn btn-primary">delete</a>
+  
+          </div>
+        </div>
+      </a>
+  
+      {% endfor %}
+  
+  
+    </div>
+  
+  </div>
+
+
+
+
+
+  <script>
+
+
+    function deleteCategory(value) {
+      console.log('value: ', value)
+    }
+  
+  </script>
 {% endblock  %}
