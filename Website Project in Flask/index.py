@@ -243,7 +243,7 @@ def userlogin_page():
             session["role"] = 'normal'
             if content['user_role'] == 1:
                 session["role"] = 'admin'
-            return render_template("index.html")
+            return redirect("/") 
             
         else:
             # return erro to login
@@ -253,7 +253,7 @@ def userlogin_page():
             
     else:
         if "user" in session:
-            return render_template("index.html")
+            return redirect("/") 
         return render_template('userlogin.html')
 
 
