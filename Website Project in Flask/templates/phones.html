@@ -17,7 +17,15 @@
                 <h4 class="card-title">{{product.name}}</h4>
                 <h6>${{product.price}}</h6>
                 <p class="card-text">{{product.description}}<br>{{product.stock}} in-Stock</p>
-                <a href="#" class="btn btn-primary" style="width: 100%"> Add <i class="fas fa-shopping-cart"></i></a>
+                <div style="display: flex; justify-content: space-around;">
+                    <p><a href="#" class="btn btn-primary" style="width: 100%"> Add <i lass="fas fa-shopping-cart"></i></a></p>
+                    <!-- <p><a href="#">details</a></p> -->
+                    <!--Decission! to show delete session for admin -->
+                    {% if session['role']=='admin' %}
+                      <p><a class="btn btn-danger" href="/deletephones/{{product.id}}">delete</a></p>
+                    {% endif %}
+                </div>
+
             </div>
         </div>
 

@@ -26,6 +26,14 @@
           <label for="description"><b>Description</b></label>
           <input type="text" placeholder="Enter Description" name="description">
           
+          <label for="categories"><b>Categories</b></label>
+          <select name="categories" method="GET" action="/">
+            {% for category in categories %}
+                <option value="{{category.id}}">{{category.name}}</option>"
+            {% endfor %}
+        </select>
+
+          
           <button type="submit">Save</button>
           
         </div>

@@ -1,5 +1,4 @@
 
-from ast import Delete
 from unicodedata import category
 from flask import Flask, jsonify, redirect, url_for, render_template, request, session
 from flask_mysqldb import MySQL, MySQLdb
@@ -290,6 +289,7 @@ def usersignup_page():
         return render_template('usersignup.html')
  
  
+ 
  #add category for Admin  
 @app.route("/addcategory", methods=["POST", "GET"])
 def addcategory_page():
@@ -325,7 +325,9 @@ def deletecategory(id):
 
  
     
+ #add product for Admin  
     #add product for Admin  
+ #add product for Admin  
 @app.route("/addproduct", methods=["POST", "GET"])
 def addproduct_page():
     #action
@@ -333,6 +335,7 @@ def addproduct_page():
         name = request.form["name"]
         price = request.form["price"]
         description = request.form["description"]
+        #categoryId = int(request.form["categories"][0])
         
 
         # register to the database
@@ -346,11 +349,25 @@ def addproduct_page():
     else:
         # calling // signup
         if "user" in session:
-            return render_template("addproduct.html")
+            # take categories from db
+            # add categoreies to the dropdown
+            cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cur.execute("SELECT id, name FROM category order by name Asc")
+            rv = cur.fetchall()
+            # return str(rv)
+            categories = []
+            content = {}
+    
+            for result in rv:
+                content = {'id': result['id'], 'name': result['name']}
+                categories.append(content)
+                content = {}
+            return render_template("addproduct.html", categories = categories)
         return render_template('login.html') 
     
+  
     
-    # delete ipads  for admin
+# delete ipads  for admin
 @app.route("/deleteipads/<int:id>")
 def deleteipads(id):
     cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -360,49 +377,73 @@ def deleteipads(id):
 
 
 # delete computer  for admin
-# @app.route("/deletecomputers/<int:id>")
-# def deletecomputers(id):
-#     cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-#     cur.execute("DELETE FROM product WHERE  id= %s", [id])
-#     mysql.connection.commit()
-#     return redirect("/computers") 
-
-# delete Phone  for admin
 @app.route("/deletecomputers/<int:id>")
 def deletecomputers(id):
     cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cur.execute("DELETE FROM product WHERE  id= %s", [id])
     mysql.connection.commit()
     return redirect("/computers") 
+
+
+# delete Phones for admin
+@app.route("/deletephones/<int:id>")
+def deletephones(id):
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("DELETE FROM product WHERE  id= %s", [id])
+    mysql.connection.commit()
+    return redirect("/phones") 
     
     
-    
+    # delete gaming for admin
+@app.route("/deletegaminng/<int:id>")
+def deletegaming(id):
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("DELETE FROM product WHERE  id= %s", [id])
+    mysql.connection.commit()
+    return redirect("/accessories/gaming") 
+
+# delete headset for admin
+@app.route("/deleteheadsets/<int:id>")
+def deleteheadsets(id):
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("DELETE FROM product WHERE  id= %s", [id])
+    mysql.connection.commit()
+    return redirect("/accessories/headsets") 
+
+# delete chargers for admin
+@app.route("/deletechargers/<int:id>")
+def deletechargers(id):
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("DELETE FROM product WHERE  id= %s", [id])
+    mysql.connection.commit()
+    return redirect("/accessories/chargers") 
+
+# delete speakers for admin
+@app.route("/deletespeakers/<int:id>")
+def deletespeakers(id):
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("DELETE FROM product WHERE  id= %s", [id])
+    mysql.connection.commit()
+    return redirect("/accessories/mics/speakers")
+
+# delete keyboard for admin
+@app.route("/deletekeyboard/<int:id>")
+def deletekeyboard(id):
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("DELETE FROM product WHERE  id= %s", [id])
+    mysql.connection.commit()
+    return redirect("/accessories/keyboard/mouse")
+
+# delete cases for admin
+@app.route("/deletecases/<int:id>")
+def deletecases(id):
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("DELETE FROM product WHERE  id= %s", [id])
+    mysql.connection.commit()
+    return redirect("/accessories/phone/ipads cases")
       
     
-    #delete product for Admin  
-@app.route("/deleteproduct", methods=["POST", "GET"])
-def deleteproduct_page():
-    #action
-    if request.method == "POST":
-        name = request.form["name"]
-        # price = request.form["price"]
-        # description = request.form["description"]
-        
-
-        # register to the database
-        cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cur.execute("""DELETE FROM product WHERE  name = %s """, [name] )
-        mysql.connection.commit()
-
-        # make sure the entered user is existing 
     
-        return render_template("index.html") 
-    else:
-        # calling // signup
-        if "user" in session:
-            return render_template("index.html")
-        return render_template('login.html') 
-  
   
   
   # logout page  
@@ -411,6 +452,19 @@ def logout():
     session.pop("user", None)
     session.pop("role", None)
     return redirect(url_for("userlogin_page"))
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -458,6 +512,9 @@ def get_category_by_id(cateogry_id):
        content = {}
     
     return jsonify(category, products)
+
+
+
 
 
 

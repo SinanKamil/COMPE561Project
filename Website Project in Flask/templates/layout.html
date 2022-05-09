@@ -63,21 +63,10 @@
 		      </li>
 			  {% endif %}
 
-        {% if session['role']=='admin' %}
-			  <li class="nav-item">
-		        <a class="nav-link" href="/deletecategory">Delete CATEGORY</a>
-		      </li>
-			  {% endif %}
 
         {% if session['role']=='admin' %}
 			  <li class="nav-item">
 		        <a class="nav-link" href="/addproduct">Add Product</a>
-		      </li>
-			  {% endif %}
-
-        {% if session['role']=='admin' %}
-			  <li class="nav-item">
-		        <a class="nav-link" href="/deleteproduct">Delete Product</a>
 		      </li>
 			  {% endif %}
 

@@ -641,3 +641,35 @@ charger-page
   
   </script>
 {% endblock  %}
+
+
+
+
+#delete product for Admin  
+@app.route("/deleteproduct", methods=["POST", "GET"])
+def deleteproduct_page():
+    #action
+    if request.method == "POST":
+        name = request.form["name"]
+        # price = request.form["price"]
+        # description = request.form["description"]
+        
+
+        # register to the database
+        cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cur.execute("""DELETE FROM product WHERE  name = %s """, [name] )
+        mysql.connection.commit()
+
+        # make sure the entered user is existing 
+    
+        return render_template("index.html") 
+    else:
+        # calling // signup
+        if "user" in session:
+            return render_template("index.html")
+        return render_template('login.html') 
+  
+
+
+
+        
