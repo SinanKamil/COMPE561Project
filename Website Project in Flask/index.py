@@ -213,7 +213,7 @@ def cases():
     
 
 
-# contact me page
+# contact-page
 @app.route("/contact")
 def contact_page():
     return render_template('contact.html')
@@ -287,6 +287,14 @@ def usersignup_page():
         if "user" in session:
             return render_template("index.html")
         return render_template('usersignup.html')
+    
+
+ # logout page  
+@app.route("/logout")
+def logout():
+    session.pop("user", None)
+    session.pop("role", None)
+    return redirect(url_for("userlogin_page"))
  
  
  
@@ -335,12 +343,15 @@ def addproduct_page():
         name = request.form["name"]
         price = request.form["price"]
         description = request.form["description"]
+        categoryId = int(request.form.get('comp_select'))
+        # return str(categoryId)
+        
         #categoryId = int(request.form["categories"][0])
         
 
         # register to the database
         cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cur.execute("""insert into product (name, price, description) values (%s,%s, %s); """ , (name, price, description))
+        cur.execute("""insert into product (name, price, description, category_id) values (%s, %s, %s, %s); """ , (name, price, description, categoryId))
         mysql.connection.commit()
 
         # make sure the entered user is existing 
@@ -442,16 +453,7 @@ def deletecases(id):
     mysql.connection.commit()
     return redirect("/accessories/phone/ipads cases")
       
-    
-    
   
-  
-  # logout page  
-@app.route("/logout")
-def logout():
-    session.pop("user", None)
-    session.pop("role", None)
-    return redirect(url_for("userlogin_page"))
 
 
 

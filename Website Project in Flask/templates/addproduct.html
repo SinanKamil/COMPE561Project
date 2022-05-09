@@ -27,7 +27,7 @@
           <input type="text" placeholder="Enter Description" name="description">
           
           <label for="categories"><b>Categories</b></label>
-          <select name="categories" method="GET" action="/">
+          <select name="comp_select" method="GET" action="/">
             {% for category in categories %}
                 <option value="{{category.id}}">{{category.name}}</option>"
             {% endfor %}
