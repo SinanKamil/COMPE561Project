@@ -331,7 +331,44 @@ def deletecategory(id):
     return redirect("/") 
 
 
- 
+@app.route("/add", methods=["POST"])
+def add_product_to_cart():
+    quantity = int(request.form["quantity"])
+    productId = int(request.form["code"])
+    
+    if quantity and productId and request.method == "POST":
+        cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cur.execute("SELECT * from product where id = %s", [productId])
+        rv = cur.fetchone()
+        
+        all_total_price = 0
+        all_total_price = 0
+        
+        itemArray = {'id': rv['id'], 'price': float(rv['price']), 'stock': rv['stock']}
+       
+        session.modified = True
+        if 'cart_item' in session:
+            if rv['id'] in session['cart_item']:
+                for key, value in session['cart_item'].items():
+                    if rv['id'] == key:
+                        old_quantity = session['cart_item'][key]['quantity']
+                        total_quantity = old_quantity + quantity
+                        session['cart_item']
+            return
+        else:
+            session['cart_item'] = itemArray
+            all_total_quantity = all_total_quantity + quantity
+            all_total_price = all_total_price + float(rv['price'])
+        
+        session['all_total_quantity']  = all_total_quantity
+        session['all_total_quantity']  = all_total_price
+        
+
+        return (content)
+    else:
+        return 'error while adding item to cart'
+    
+    
     
  #add product for Admin  
     #add product for Admin  
@@ -552,7 +589,7 @@ def search_product(data):
 
 
 @app.route('/add', methods=['POST'])
-def add_product_to_cart():
+def add1_product_to_cart():
  try:
   _quantity = int(request.form['quantity'])
   id = request.form['id']

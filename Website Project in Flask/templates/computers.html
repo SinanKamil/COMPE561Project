@@ -4,6 +4,20 @@
 
 {% block body %}
 
+
+<div class="container">
+    <div class="row">
+        <p>
+            <h2>Shopping cart is here</h2>
+        </p>
+        <div class="col-sm-12">
+            <div class="no-records">
+                Your Cart is Empty
+            </div>
+        </div>
+    </div>
+</div>
+
 <h3 class="text-center">Laptop & Computers</h3>
 <div class="col-md-11" style="width: 80%; margin: 0 auto;">
     <div class="row">
@@ -18,17 +32,21 @@
                 <h4 class="card-title">{{product.name}}</h4>
                 <h6>${{product.price}}</h6>
                 <p class="card-text">{{product.description}}<br>{{product.stock}} in-Stock</p>
-                <div style="display: flex; justify-content: space-around;">
-                    <p><a href="#" class="btn btn-primary" style="width: 100%"> Add <i lass="fas fa-shopping-cart"></i></a></p>
+                <div>
+                    <form action="/add" method="post" style="width: 100%; display: flex; justify-content: space-around;">
+                        <input type="number" name="quantity" value="0" style="max-width: 25%; max-height: 38px; text-align: center;">
+                        <input type="hidden" name="code" value="{{ product.id }}"/>
+                        <!-- <p><a href="/add" class="btn btn-primary" style="width: 100%"> Add to Cart <i class="fas fa-shopping-cart"></i></a></p> -->
+                        <p><button type="submit" class="btn btn-primary">Add to Cart <i class="fas fa-shopping-cart"></i></button></p>
+                    
+                    </form>
+                   
                     <!-- <p><a href="#">details</a></p> -->
                     <!--Decission! to show delete session for admin -->
                     {% if session['role']=='admin' %}
-                    <p><a class="btn btn-danger" href="/deletecomputers/{{product.id}}">delete</a></p>
+                    <p><a class="btn btn-danger"  href="/deletecomputers/{{product.id}}">delete</a></p>
                     {% endif %}
 
-                    
-                    
-                    
                 </div>
             </div>
         </div>
